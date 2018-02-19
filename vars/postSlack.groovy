@@ -2,11 +2,6 @@
 
 def call(String path, String pattern, String token, String channel = '#jenkins') {
     channel = channel ?: '#jenkins'
-
-    echo path
-    echo pattern
-    echo token
-    echo channel
     
     def imgFiles = new FileNameFinder().getFileNames(path, pattern)
     for (String file : imgFiles) {
