@@ -35,9 +35,15 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
     colorCode = 'good'
+  } else if (buildStatus == 'SUCCESS') {
+    color = 'GREEN'
+    colorCode = 'good'
   } else if (buildStatus == 'UNSTABLE') {
     color = 'YELLOW'
     colorCode = 'warning'
+  } else if (buildStatus == 'FAILURE') {
+    color = 'RED'
+    colorCode = 'danger'
   } else {
     color = 'RED'
     colorCode = 'danger'
