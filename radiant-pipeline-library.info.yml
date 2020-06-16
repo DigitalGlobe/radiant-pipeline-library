@@ -1,0 +1,12 @@
+name: radiant-pipeline-library
+description: Jenkins scripting that can be reused
+source: https://gitub.com/DigitalGlobe/radiant-pipeline-library
+team: FoundationGEOINT Engineering Team
+data classification:
+  - company_proprietary
+language:
+  - java
+
+poc:
+  - name: Seth Putnam
+    email: seth.putnam@maxar.com
