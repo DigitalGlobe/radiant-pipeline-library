@@ -62,16 +62,43 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
         def total = testResultAction.getTotalCount()
         def failed = testResultAction.getFailCount()
         def skipped = testResultAction.getSkipCount()
-
+      
         summary = "Test results:\n\t"
         summary = summary + ("Passed: " + (total - failed - skipped))
         summary = summary + (", Failed: " + failed + " ${testResultAction.failureDiffString}")
         summary = summary + (", Skipped: " + skipped)
+      
+        if (failed > 0) {
+          summary = summary + "\n\nTest failures:\n\t"
+          summary = summary + getFailedTests()
+        }
+
     } else {
         summary = "No tests found"
     }
     return summary
   }
+  
+  @NonCPS
+  def getFailedTests = { ->
+      def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+      def failedTestsString = "```"
+
+      if (testResultAction != null) {
+          def failedTests = testResultAction.getFailedTests()
+
+          if (failedTests.size() > 9) {
+              failedTests = failedTests.subList(0, 8)
+          }
+
+          for(CaseResult cr : failedTests) {
+              failedTestsString = failedTestsString + "${cr.getFullDisplayName()}:\n${cr.getErrorDetails()}\n\n"
+          }
+          failedTestsString = failedTestsString + "```"
+      }
+      return failedTestsString
+  }
+  
   def testSummaryRaw = getTestSummary()
   // format test summary as a code block
   def testSummary = "```${testSummaryRaw}```"
