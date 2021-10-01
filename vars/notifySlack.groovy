@@ -72,7 +72,8 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
       
         if (failed > 0) {
           summary = summary + "\n\nTest failures:\n\t"
-          summary = summary + getFailedTests()
+          def testFails = getFailedTests()
+          summary = summary + testFails
         }
 
     } else {
