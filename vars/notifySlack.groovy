@@ -60,7 +60,7 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
     def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     def summary = ""
     def getFailedTests = { ->
-        def failedTestsString = "```"
+        def failedTestsString = ""
 
         if (testResultAction != null) {
             def failedTests = testResultAction.getFailedTests()
@@ -70,9 +70,8 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
             }
 
             for(CaseResult cr : failedTests) {
-                failedTestsString = failedTestsString + "${cr.getFullDisplayName()}:\n${cr.getErrorDetails()}\n\n"
+                failedTestsString = failedTestsString + "\t${cr.getFullDisplayName()}:\n${cr.getErrorDetails()}\n\n"
             }
-            failedTestsString = failedTestsString + "```"
         }
         return failedTestsString
     }
@@ -88,7 +87,7 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
         summary = summary + (", Skipped: " + skipped)
       
         if (failed > 0) {
-          summary = summary + "\n\nTest failures:\n\t"
+          summary = summary + "\n\nTest failures:\n"
           def testFails = getFailedTests()
           summary = summary + testFails
         }
