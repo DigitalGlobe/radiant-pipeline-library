@@ -60,7 +60,6 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
     def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     def summary = ""
     def getFailedTests = { ->
-        def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
         def failedTestsString = "```"
 
         if (testResultAction != null) {
